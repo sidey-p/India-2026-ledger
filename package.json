@@ -1,0 +1,9 @@
+{
+  "name": "india-2026-ledger",
+  "version": "1.0.0",
+  "private": true,
+  "description": "The Ledger: India 2026. A sourced, non-partisan statistical report on taxes, life, and the choice to stay or go.",
+  "scripts": {
+    "start": "npx serve ."
+  }
+}
