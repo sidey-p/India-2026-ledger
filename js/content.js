@@ -1,61 +1,5 @@
 "use strict";
 /* Scenes, helpers, and report data */
-/* ---------- SCENES ---------- */
-const SCENES = {
-  open:{slug:"INT. A CHAI STALL OUTSIDE A METRO STATION. EVENING.",lines:[
-    ["ASHA",`Nine lakh a year. Zero income tax on that. So why is my account empty by the twentieth?`,"checking her salary slip"],
-    ["RAVI",`Because tax is not one bill. It's GST on the shelf, petrol at the pump, stamp duty on the shop. The salary slip is the smallest part.`],
-    ["THE AUDITOR",`You're both half right. India collects about 17.6% of GDP in tax. Denmark collects 45.2%. The OECD average is 34.1%.`,"sets down a folder"],
-    ["ASHA",`So we pay less. Then why do we get less?`],
-    ["THE AUDITOR",`Because a small share of a small income is still small money. And most filers owe nothing: 4.9 crore of 8.09 crore returns showed zero taxable income.`],
-    ["RAVI",`So who pays?`],
-    ["THE AUDITOR",`Everyone who buys something. That's what makes it hard to see. I'll show every number, where it came from, and how sure I am.`],
-    ["ACTION","The Auditor turns to the camera. No side. No verdict without evidence."]]},
-  bill:{slug:"INT. TAX OFFICE, AFTER HOURS. A SINGLE LAMP.",lines:[
-    ["THE OFFICIAL",`Income tax is zero up to twelve lakh. Everyday goods got cheaper last September. Collections kept rising. That is a system working.`,"speaking for the government's stated case"],
-    ["THE CRITIC",`Gross GST is up 15%, but refunds are up 68%, and net is up 8%. A quarter of the Union budget goes to interest, not to hospitals.`,"speaking for the critics' case"],
-    ["THE AUDITOR",`Gross GST: 1.99 lakh crore rupees in August. Net growth: 8.3%. Interest: about 26% of Union spending. Each of you has a real number. Neither has the whole picture.`]]},
-  score:{slug:"INT. A PROJECTION ROOM. A WORLD MAP ON THE WALL.",lines:[
-    ["ASHA",`Where do we actually stand?`],
-    ["THE AUDITOR",`Depends on the question. Innovation: 38th of 139. Happiness: 116th of 147. Peace: 127th of 163. Press freedom: 157th of 180.`],
-    ["ASHA",`That looks bad.`],
-    ["THE AUDITOR",`Some of it is. Some of it is a poor country measured against very rich ones. So I'll show both: the rank, and the income gap behind it.`]]},
-  sectors:{slug:"INT. A TRAIN CAR, PUNE TO DELHI. NIGHT.",lines:[
-    ["RAVI",`My mother's operation. The scheme paid part. I paid the rest.`,"looking out the window"],
-    ["THE AUDITOR",`You're the average. Households still pay 43.4% of all health spending out of pocket. Ten years ago it was 64.2%. Better, and still heavy.`],
-    ["ASHA",`And my cousin's school?`],
-    ["THE AUDITOR",`The average adult has 6.88 years of schooling. Public education spending is somewhere between 2.7% and 4% of GDP, depending on who counts. The promise was 6%.`]]},
-  promises:{slug:"INT. A PARLIAMENT LIBRARY. NIGHT. TWO LONG TABLES.",lines:[
-    ["THE OFFICIAL",`Half our power capacity is clean, five years early. Extreme poverty is down. The Maoist leadership is finished.`],
-    ["THE CRITIC",`Farm income was going to double by 2022. Manufacturing was going to reach 25% of GDP. The bullet train was going to run in 2022.`],
-    ["THE AUDITOR",`You're reading from the same ledger, different pages. I'm going to keep score, line by line.`]]},
-  stability:{slug:"EXT. A CURRENCY EXCHANGE COUNTER. DAY. HEAT.",lines:[
-    ["RAVI",`The dollar was 83 rupees three years ago. Now it's almost 96.`],
-    ["THE AUDITOR",`Down about 9% in the last year alone. Oil is near $108, the US Federal Reserve just raised rates, and the monsoon is the weakest since 2009. But reserves are $729 billion.`],
-    ["ASHA",`Is that a crisis?`],
-    ["THE AUDITOR",`The data show stress, not a crisis. I'd watch three numbers: the rupee, reserves, and food prices.`]]},
-  news:{slug:"INT. A NEWSROOM. MIDNIGHT.",lines:[
-    ["ACTION","Screens flicker. Headlines stack up."],
-    ["THE AUDITOR",`Nine months, three shocks: a war that closed a shipping lane, a new way of counting GDP, and a weak monsoon. Here they are in order, with dates and sources.`]]},
-  decide:{slug:"INT. AN AIRPORT DEPARTURE HALL. DAWN.",lines:[
-    ["ASHA",`I have an offer abroad.`,"holding a boarding pass, not yet using it"],
-    ["THE AUDITOR",`Three things first. The income gap is real: roughly 8 to 10 times. The doors are narrowing: the US just extended a $100,000 H-1B fee, though a court is blocking it for now. And your rupee salary has lost about 9% against the dollar in a year.`],
-    ["ASHA",`So go?`],
-    ["THE AUDITOR",`I don't answer that. I hand you the questions you have to answer.`]]},
-  who:{slug:"INT. AN EMPTY COURTROOM. NIGHT.",lines:[
-    ["THE CRITIC",`Who is accountable?`],
-    ["THE OFFICIAL",`We are, for what the Centre controls. Health, police, and most farming belong to the states.`],
-    ["THE AUDITOR",`Both true. Currency and defense are the Centre's. Statistics belong to a ministry the IMF graded C. Elections belong to a commission the Supreme Court just backed. Everyone is accountable for something. Nobody is accountable for everything.`]]},
-  audit:{slug:"INT. A WRITER'S ROOM. DAWN. PAGES EVERYWHERE.",lines:[
-    ["THE AUDITOR",`The first draft was not a lie. It was a sketch. Here is what I checked, what I changed, and what I still can't confirm.`,"to camera"]]}
-};
-function scene(id){
-  const s = SCENES[id];
-  return `<section class="screen" aria-label="Opening scene"><div class="slug">${s.slug}</div>${s.lines.map(l => l[0]==="ACTION"
-    ? `<p class="action">${l[1]}</p>`
-    : `<div class="dlg"><div class="who">${l[0]}</div>${l[2]?`<div class="paren">(${l[2]})</div>`:""}<div class="say">${l[1]}</div></div>`).join("")}</section>`;
-}
-
 /* ---------- HELPERS ---------- */
 const fmt = (n, d=0) => Number(n).toLocaleString("en-IN", {maximumFractionDigits:d, minimumFractionDigits:d});
 function bars(rows, o={}){
@@ -106,7 +50,9 @@ const PROMISES = [
   {t:"Reforms are driving 7.8% growth",by:"Q1 FY27 release",s:"partial",e:`The 7.8% figure is official. But it relies on a new base year and a new deflator, which critics question. The IMF still grades India's national accounts C.`,k:["gdpq1","gdpdebate","imfc"]},
   {t:"RDI scheme: 1 lakh crore rupees for private R&D",by:"Cabinet, July 2025 | Six years",s:"partial",e:`Launched. At the latest update, about 2,000 crore was sanctioned to two funding bodies and about 500 crore disbursed. Too early to judge.`,k:["rdi","rd"]},
   {t:"Lower US tariffs",by:"Interim deal, Feb 2026",s:"partial",e:`The announced deal cut tariffs on most goods from 50% to 18%. Then the US Supreme Court struck down the emergency tariffs, and by June the deal was still not final.`,k:["trade","trade2"]},
-  {t:"Developed nation by 2047",by:"Long-term goal",s:"unverified",e:`The World Bank has said this needs about 7.8% average growth for 22 years. Growth was 7.6% in FY26; the RBI forecasts 6.7% for FY27.`,k:["wbgrowth","gdpnew","rbi"]}
+  {t:"Developed nation by 2047",by:"Long-term goal",s:"unverified",e:`The World Bank has said this needs about 7.8% average growth for 22 years. Growth was 7.6% in FY26; the RBI forecasts 6.7% for FY27.`,k:["wbgrowth","gdpnew","rbi"]},
+  {t:"Digital payments for everyday life",by:"Digital India goal | Ongoing",s:"delivered",e:`UPI processed a record 24.51 billion transactions worth 29.82 lakh crore rupees in August 2026, up 22% by volume and 20% by value in a year. It is now accepted in 11 countries. Average payment size keeps falling, which shows small everyday use.`,k:["upi"]},
+  {t:"A new census after 2011",by:"Postponed from 2021 | Now under way",s:"partial",e:`Houselisting runs April to September 2026 and the head count in February 2027. It is the first digital census and the first to count caste since 1931. The gap since 2011 is the longest since 1881 (secondary source). Results are not out yet.`,k:["census","census2","census3"]}
 ];
 const NEWS = [
   ["22 Sep 2025","GST rate cuts take effect","Rates cut on many goods. Collections grew 4.6% in October anyway.","gstoct"],
@@ -117,72 +63,20 @@ const NEWS = [
   ["27 Feb 2026","New GDP series, base year 2022-23","FY26 growth 7.6%. Nominal GDP is lower by about 3-4% than the old series.","gdpnew"],
   ["Early Mar 2026","Strait of Hormuz closes in the Iran war","LPG shortages and protests in India. Most of India's LPG imports come through that route.","hormuz","lpg"],
   ["30 Mar 2026","Home Minister says India is virtually Naxal-free","A government claim on the 31 March deadline.","naxal"],
+  ["1 Apr 2026","Census houselisting begins; new Income-tax Act takes effect","The first digital census starts its first phase. The new tax law replaces the old one.","census","ita25"],
   ["30 Apr 2026","RSF press freedom index","India falls to 157th of 180.","rsf2"],
   ["4 May 2026","State election results","BJP wins West Bengal; UDF wins Kerala; TVK becomes largest in Tamil Nadu; BJP holds Assam.","elec"],
   ["27 May 2026","Supreme Court upholds voter-roll revision (SIR)","The revision removed about 91 lakh names in West Bengal. The Election Commission says these were deceased, shifted, or duplicate entries.","sir","sir2"],
+  ["28 May 2026","First Kuki-Zo village resettled in Manipur","The first resettlement since violence began in May 2023.","manipur2"],
   ["Jun 2026","Global Peace Index 2026","India falls to 127th, from 115th a year earlier.","gpi26"],
+  ["30 Jun 2026","RBI Financial Stability Report","Bank bad loans at a multi-decade low of 1.8% of loans.","npa"],
   ["5 Aug 2026","RBI holds repo rate at 5.25%","FY27 growth forecast raised to 6.7%.","rbi"],
   ["31 Aug 2026","Q1 FY27 GDP: 7.8% on the new series","Critics question the deflator and the new base.","gdpq1","gdpdebate"],
-  ["1 Sep 2026","GST, August: gross 1.99 lakh crore","Gross +14.8%, refunds +67.9%, net +8.3%.","gst"],
+  ["1 Sep 2026","GST and UPI records for August","GST gross 1.99 lakh crore, refunds +67.9%. UPI hits 24.51 billion transactions.","gst","upi"],
   ["Mid Sep 2026","CPI inflation 4.82% for August; food inflation 5.95%","Highest headline reading since December 2024.","cpi","foodinf"],
   ["16 Sep 2026","US Fed raises rates for the first time since 2023","Pressure on the rupee, which sits near 96 per dollar.","fx"],
   ["18 Sep 2026","US extends $100,000 H-1B fee rule to Sept 2027","Courts are still blocking it. Status may change quickly.","h1b","h1bk"],
-  ["19 Sep 2026","Rupee closes at 95.89; monsoon deficit near 15%","The weakest monsoon since 2009 if the gap holds.","fx2","monsoon"]
-];
-
-/* ---------- SECTORS ---------- */
-const SECTORS = [
- {n:"Health",s:"mixed",lead:`Life is longer and families pay less of the bill than before, but public spending is still small.`,
-  kv:[["72.0 yrs","Life expectancy, 2023"+c("hdr")],["1.43%","Government health spending, share of GDP (2022-23)"+c("nha")],["43.4%","Share of health spending paid out of pocket, down from 64.2%"+c("nha")],["2.5%","GDP share promised for 2025"+c("nhp")]],
-  good:`Out-of-pocket share fell sharply. Government health spending is now about 44% of all health spending.`+c("nha"),
-  bad:`At 1.43% of GDP, public spending is well below the promise. Government health spending is only about 4.9% of all government spending.`+c("nha"),
-  grey:`The new GDP series moves the health share from 1.43% to 1.48%. Same money, different denominator.`+c("nha"),
-  who:`Public health is a state subject. The Centre funds schemes; states run most hospitals.`,
-  cmp:`Top-ranked countries spend several times more per person. I did not verify peer health-spending shares this session.`},
- {n:"Education",s:"mixed",lead:`Schooling has grown, but the average adult still has under seven years of it, and public spending is below the 6% goal.`,
-  kv:[["6.88 yrs","Mean years of schooling, 2023"+c("hdr")],["2.7% to about 4%","Public education spending, share of GDP, by two counts"+c("edu","edu2")],["6%","Long-standing target"+c("edu")]],
-  good:`Years of schooling and expected schooling have risen over time.`+c("hdr"),
-  bad:`The 6% target has never been reached. The review behind the 4% figure calls for a clearer, shared Centre-state funding split.`+c("edu"),
-  grey:`The 2.7% and about 4% figures are both official-source numbers. They differ on what counts as education spending.`+c("edu","edu2"),
-  who:`Education is on the concurrent list, and states pay most of the bill.`,
-  cmp:`I did not verify learning-outcome data (for example ASER) or peer test scores this session.`},
- {n:"Jobs and income",s:"stressed",lead:`Headline unemployment looks low on one measure and high on another. Young people are hit hardest.`,
-  kv:[["5.4%","Unemployment, Apr-Jun 2026 (weekly status)"+c("plfsq")],["15.9%","Youth (15-29) unemployment, same period"+c("plfsq")],["3.1%","Unemployment, 2025 annual (usual status)"+c("plfsa")],["about 25%","Youth not in work, school or training, 2025"+c("plfsa")],["about 32.7%","Female labor force participation, June 2026 monthly"+c("plfsm")],["$11,050","Income per person, PPP, 2024 (World Bank)"+c("gniw2")]],
-  good:`Growth is high on paper, and participation in the labor force is about 54.6%.`+c("plfsq"),
-  bad:`Youth unemployment rose from 14.6% a year earlier to 15.9%. Manufacturing has not grown as a share of the economy.`+c("plfsq","mfg"),
-  grey:`3.1% and 5.4% are both official. They use different definitions (usual status vs. current weekly status). Neither is wrong.`+c("plfsa","plfsq"),
-  who:`Centre (industrial policy), states (labor, land, skills), and private firms.`,
-  cmp:`Norway's income per person is about 9.7 times India's; the United States' is about 7.8 times.`+c("gniw","gniw2")},
- {n:"Poverty and inequality",s:"improving",lead:`Fewer people live in extreme poverty. How unequal India is depends on what you measure.`,
-  kv:[["5.3%","Extreme poverty at $3 a day, 2022-23"+c("pov")],["25.5","Gini on consumption (World Bank)"+c("gini")],["62","Gini on income (World Inequality Database)"+c("gini")],["30.7%","Loss to human development from inequality"+c("hdr")]],
-  good:`Extreme poverty is far lower than a decade earlier.`+c("pov"),
-  bad:`Income is far more unequal than consumption data suggests. Inequality cuts India's human development score by about 30.7%.`+c("gini","hdr"),
-  grey:`Consumption Gini (25.5) makes India look nearly equal. Income Gini (62) says the opposite. Both are real; they measure different things.`+c("gini"),
-  who:`Centre and states share welfare spending.`,cmp:`Peer Gini values were not verified this session.`},
- {n:"Security and peace",s:"weak",lead:`The Global Peace Index dropped India 12 places in a year. It measures conflict, militarization and tension, not only street crime.`,
-  kv:[["127th","Global Peace Index 2026 (was 115th)"+c("gpi26","gpi25")],["26","People killed in the Pahalgam attack, April 2025"+c("sec25")],["4 days","India-Pakistan conflict, May 2025; ceasefire on 10 May"+c("sindoor")]],
-  good:`The Home Minister says Maoist violence has ended. Independent confirmation is missing.`+c("naxal"),
-  bad:`A car blast in Delhi in November 2025 and risks along the border with Pakistan keep the index score weak.`+c("sec25","sindoor"),
-  grey:`I did not review NCRB crime data, women's safety data, or the state of Manipur this session. Day-to-day safety varies a lot by state and city.`,
-  who:`Terror and borders are the Centre's. Policing is a state subject.`,cmp:`GPI 2026: Switzerland 3rd; Singapore, Finland in the top 10. Other peers not verified.`+c("gpi26")},
- {n:"R&D and technology",s:"weak",lead:`India spends under 1% of GDP on research. It produces many papers and ranks well on innovation for its income level.`,
-  kv:[["0.84%","R&D spending, 2023-24 (DST)"+c("rd")],["0.6%","Economic Survey's figure"+c("rd2")],["2.58%","China"+c("rd")],["3.45%","United States"+c("rd")],["4.94%","South Korea"+c("rd")],["51.8%","Share of R&D paid by private firms"+c("rd")]],
-  good:`India is the world's third-largest producer of research papers, and 38th of 139 on the innovation index.`+c("rd2","gii"),
-  bad:`Private firms fund about half of R&D (51.8%). The 1 lakh crore rupee RDI scheme has released little money so far.`+c("rd","rdi"),
-  grey:`0.6% vs 0.84%: the sources do not explain the gap clearly.`+c("rd","rd2"),
-  who:`Centre (science ministries and funds), private firms, universities.`,cmp:`Researchers per million people are also far lower than South Korea (see DST).`+c("dst")},
- {n:"Air, climate and energy security",s:"weak",lead:`Air pollution is a daily cost. Energy supply became a shock in 2026.`,
-  kv:[["48.9 µg/m³","Average PM2.5, 2025 (about 10x the WHO limit)"+c("air")],["66 of 100","Most polluted cities that are in India"+c("air")],["50%","Non-fossil share of power capacity, mid-2025"+c("renew")],["-15%","Monsoon rainfall gap, Sept 2026"+c("monsoon")]],
-  good:`Clean power capacity is growing fast and hit 50% early.`+c("renew"),
-  bad:`India ranked sixth most polluted of 143 countries, and Delhi was the most polluted capital for the eighth year. The Hormuz closure exposed the LPG supply chain.`+c("air","hormuz"),
-  grey:`Capacity share is not generation share. Coal still produces most of the electricity.`+c("renew"),
-  who:`Centre (energy, air commission), states and cities (enforcement).`,cmp:`I did not verify peer air-quality numbers this session.`},
- {n:"Women and gender",s:"weak",lead:`India ranks 131st of 148 on the Global Gender Gap. Few urban women are in the labor force.`,
-  kv:[["131 of 148","Global Gender Gap 2025"+c("gender")],["about 24.8%","Urban female labor force participation, June 2026"+c("plfsm")]],
-  good:`I found no clear gain to report in this session's data. I did not check the long-run trend.`,
-  bad:`Only about one in four urban women is in the labor force.`+c("plfsm"),
-  grey:`The gender gap index blends economics, education, health and politics. Rankings move with the exact indicators used.`,
-  who:`Centre and states.`,cmp:`Peer ranks were not verified this session.`}
+  ["18 Sep 2026","Rupee closes at 95.89; monsoon deficit near 15%","The weakest monsoon since 2009 if the gap holds.","fx2","monsoon"]
 ];
 const ACCOUNT = [
  ["Tax base and budget","Finance Ministry; GST Council (Centre and states)",`Few income-tax filers; interest is about 26% of Union spending; GST refunds are jumping.`+c("itr","exprs","gst"),`Low incomes, a large informal economy, past debt.`,`Widen the formal base; process refunds faster; follow a published debt path.`,`Net GST growth; deficit vs 4.3% target`],
@@ -228,9 +122,11 @@ const GREY = [
  ["Q1 growth","7.8% (new-series comparison)","One critic's 2.6% (new level vs old-series level)","The explainer says the second is not a valid comparison"],
  ["Tax burden","11.2% of GDP (Centre only, from draft)","17.6% of GDP (all governments, from draft)","Different coverage"],
  ["Health spending","1.43% of GDP","1.48% of GDP","Old vs. new GDP denominator"],
- ["Denmark top tax rate","55.9% (2025)","60.5% (2026)","Different year"]
+ ["Denmark top tax rate","55.9% (2025)","60.5% (2026)","Different year"],
+ ["Child stunting","33.8% (NFHS-5, 2019-21)","35.5% (Our World in Data, 2020)","Different surveys and years"],
+ ["Class 3 reading (ASER 2024)","23.4% read a Class 2 text (PARI summary, government schools)","27% (an exam-prep summary of the same report)","Possibly different school groups; I used the PARI figures"],
+ ["Debt","55.6% of GDP (Centre)","About 81-85% of GDP (Centre plus states)","Different coverage"]
 ];
-
 /* ---------- TAX CALC ---------- */
 function calcTax(gross, salaried){
   let taxable = Math.max(0, gross - (salaried ? 75000 : 0));
@@ -244,3 +140,5 @@ function calcTax(gross, salaried){
   const total = tax + sur + cess;
   return {taxable, tax, sur, cess, total};
 }
+
+RANKS.forEach(x => { x.s = {gii:"Innovation",cpi25:"Corruption",hdrtop:"Human dev.",whr:"Happiness",gpi26:"Peace",ghi:"Hunger",rsf2:"Press",gender:"Gender",air:"Air"}[x.k]; });
