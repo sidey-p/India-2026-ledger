@@ -82,7 +82,7 @@ function meter(v, max, o={}){
 const tabs = (id, items) => `<div data-tabs="${id}"><div class="tabbar" role="tablist">${items.map((t, i) => `<button type="button" role="tab" class="tabbtn" data-tab="${t.k}" aria-selected="${i===0}">${t.l}</button>`).join("")}</div>${items.map((t, i) => `<div class="tabpanel" role="tabpanel" data-panel="${t.k}"${i?" hidden":""}>${t.h}</div>`).join("")}</div>`;
 
 /* Layout helpers */
-const panel = (eyebrow, title, body, read, keys) => `<div class="panel"><div class="eyebrow">${eyebrow}</div><h3>${title}</h3>${body}${read?`<p class="read"><b>Read:</b> ${read}</p>`:""}${keys?`<div class="fine" style="margin-top:8px">Sources ${c(...keys)}</div>`:""}</div>`;
+const panel = (eyebrow, title, body, read, keys) => `<div class="panel"><div class="eyebrow">${eyebrow}</div><h3>${title}</h3>${body}${read?`<p class="read"><b>Read:</b> ${read}</p>`:""}${keys&&keys.length?`<div class="fine" style="margin-top:8px">Sources ${c(...keys)}</div>`:""}</div>`;
 const S = (id, icon, eyebrow, title, sub, body) => `<section class="wrap reveal sec" id="s-${id}"><div class="section-head"><div style="display:flex;gap:14px;align-items:center"><div class="ico">${ic(icon)}</div><div><div class="eyebrow">${eyebrow}</div><h2>${title}</h2></div></div>${sub?`<p>${sub}</p>`:""}</div>${body}</section>`;
 const ST2 = {delivered:"Delivered",partial:"Partly",missed:"Missed",unverified:"Can't verify",improving:"Improving",mixed:"Mixed",weak:"Weak",stressed:"Under stress",worsening:"Worsening",flat:"Flat",far:"Far behind",behind:"Behind",strong:"Strong"};
 const chipS = s => `<span class="st ${s}">${ST2[s]||s}</span>`;

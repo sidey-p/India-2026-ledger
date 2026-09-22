@@ -79,6 +79,33 @@ const INIT = {
       btns.forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
       const f = b.dataset.f; document.querySelectorAll("#plist .pc").forEach(p => { p.style.display = (f === "all" || p.dataset.s === f) ? "" : "none"; });
     }));
+  },
+  depts(){
+    const btns = document.querySelectorAll(".fchip[data-df]");
+    btns.forEach(b => b.addEventListener("click", () => {
+      btns.forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+      const f = b.dataset.df; document.querySelectorAll("#dlist .pc").forEach(p => { p.style.display = (f === "all" || p.dataset.s === f) ? "" : "none"; });
+    }));
+  },
+  states(){
+    let cur = LAYERS[0], selId = "up";
+    const box = document.getElementById("mapbox"), legend = document.getElementById("maplegend"), rank = document.getElementById("maprank"), detail = document.getElementById("statedetail");
+    const tabs = document.querySelectorAll("#layers .tabbtn");
+    const redraw = () => {
+      box.innerHTML = mapSVG(cur);
+      legend.innerHTML = legendHTML(cur);
+      rank.innerHTML = rankBars(cur);
+      box.querySelectorAll(".stt").forEach(p => { if (p.dataset.id === selId) p.classList.add("sel"); });
+    };
+    redraw();
+    box.addEventListener("click", e => { const p = e.target.closest(".stt"); if (!p) return;
+      box.querySelectorAll(".stt.sel").forEach(x => x.classList.remove("sel")); p.classList.add("sel");
+      selId = p.dataset.id; detail.innerHTML = stateDetail(selId); });
+    box.addEventListener("keydown", e => { if (e.key !== "Enter" && e.key !== " ") return; const p = e.target.closest(".stt"); if (!p) return; e.preventDefault(); p.click(); });
+    tabs.forEach(b => b.addEventListener("click", () => {
+      tabs.forEach(x => x.setAttribute("aria-selected", x === b ? "true" : "false"));
+      cur = LAYERS.find(L => L.k === b.dataset.layer); redraw();
+    }));
   }
 };
 
@@ -100,4 +127,14 @@ document.getElementById("theme").addEventListener("click", () => {
   const cur = document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
   document.documentElement.dataset.theme = cur === "dark" ? "light" : "dark";
 });
+/* ---- intro animation (once per tab session) ---- */
+(function(){
+  const ov = document.getElementById("introOverlay");
+  if (!ov) return;
+  if (sessionStorage.getItem("ledgerIntroSeen") || calm) { ov.remove(); return; }
+  sessionStorage.setItem("ledgerIntroSeen", "1");
+  setTimeout(() => { ov.classList.add("gone"); setTimeout(() => ov.remove(), 550); }, 1500);
+  ov.addEventListener("click", () => { ov.classList.add("gone"); setTimeout(() => ov.remove(), 300); });
+})();
+
 route();

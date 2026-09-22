@@ -10,24 +10,29 @@ It is a plain static site. No build step, no dependencies.
 
 ```
 india-2026-ledger/
-├── index.html         Page shell: icon sprite, top bar, tooltip, footer, script tags
+├── index.html         Page shell: icon sprite, intro animation, top bar, tooltip, footer
 ├── css/
-│   └── style.css      Dashboard design system (dark by default, light theme supported)
+│   └── style.css      Dashboard design system (dark by default), quote openers, state map, intro overlay
 ├── js/
 │   ├── sources.js     Numbered source list (every [n] link in the report)
 │   ├── content.js     Rankings, peer table, promises, news, accountability data, tax calculator
-│   ├── narration.js   The cinematic voice-over caption that opens each reel
+│   ├── quotes.js      One quote opener per reel
 │   ├── charts.js      Stat components: KPI tiles, bars, columns, donut, radar, line chart, tabs
-│   ├── pages_a.js     Reels 1-5: Overview, Tax, Economy, People, Work
-│   ├── pages_b.js     Reels 6-14: Safety, Future, Trust, World, Promises, News, Stay or go, Reckoning, Audit
-│   └── app.js         Router (hash-based), counters, tooltips, tabs, calculator, compare tool, filters
+│   ├── statedata.js   Per-state data: ruling party, income, infant deaths, crime, poverty
+│   ├── map-data.js    State SVG path data (svg-maps/india, CC BY 4.0)
+│   ├── data2.js       Departments, corruption case files, paper-vs-ground, foreign relations, benefits
+│   ├── pages_a.js      Reels: Tax, Economy, People, Work (+ page shell, PAGES list)
+│   ├── pages_b.js      Reels: Safety, Future, Politics, World, Promises, News, Stay or go, Reckoning
+│   ├── pages_c.js      Reels: Benefits, New rules, Departments, States map, Corruption, Paper vs ground, Foreign
+│   ├── pages_d.js      Reels: Overview (home), Audit + Sources
+│   └── app.js          Router, counters, tooltips, tabs, calculator, compare tool, filters, map, intro animation
 ├── vercel.json        Security and cache headers
-├── package.json       Optional; only for `npm start` to preview locally
+├── package.json        Optional; only for `npm start` to preview locally
 └── .gitignore
 ```
 
-Scripts load in this order: `sources.js`, `content.js`, `narration.js`, `charts.js`, `pages_a.js`, `pages_b.js`, `app.js`.
-They share globals, so keep that order.
+Scripts load in this order: `sources.js`, `content.js`, `quotes.js`, `charts.js`, `statedata.js`, `map-data.js`,
+`data2.js`, `pages_a.js`, `pages_b.js`, `pages_c.js`, `pages_d.js`, `app.js`. They share globals, so keep that order.
 
 ## Preview locally
 
@@ -61,8 +66,9 @@ Pages use hash routes (`/#/bill`, `/#/score`, ...), so no rewrite rules are need
 
 - Add or change a source in `js/sources.js`. Numbers in brackets follow the order of that list.
 - Rankings, peer table, promises, news, and questions live in `js/content.js`.
-- The opening voice-over for each reel is in `js/narration.js`.
-- Each page's charts and numbers are in `js/pages_a.js` and `js/pages_b.js`. Reusable chart components are in `js/charts.js`.
+- Per-state figures are in `js/statedata.js`; map paths in `js/map-data.js`.
+- Departments, corruption case files, paper-vs-ground checks, and foreign relations are in `js/data2.js`.
+- Each page's charts and numbers are in `js/pages_a.js` through `js/pages_d.js`. Reusable chart components are in `js/charts.js`.
 
 ## Notes
 

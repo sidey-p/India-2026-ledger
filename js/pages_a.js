@@ -1,71 +1,19 @@
 "use strict";
 const PAGES = [
- {id:"home",name:"Overview",icon:"chart"},{id:"tax",name:"Tax",icon:"landmark"},{id:"economy",name:"Economy",icon:"wallet"},
- {id:"people",name:"People",icon:"heart"},{id:"work",name:"Work",icon:"building"},{id:"safety",name:"Safety",icon:"shield"},
- {id:"future",name:"Future",icon:"flask"},{id:"trust",name:"Trust",icon:"scale"},{id:"world",name:"World",icon:"ship"},
- {id:"promises",name:"Promises",icon:"book"},{id:"news",name:"News",icon:"search"},{id:"decide",name:"Stay or go",icon:"road"},
- {id:"reck",name:"Reckoning",icon:"info"},{id:"audit",name:"Audit",icon:"search"}
+ {id:"home",name:"Overview",icon:"chart"},{id:"tax",name:"Tax",icon:"landmark"},{id:"benefits",name:"Benefits",icon:"utensils"},
+ {id:"policy",name:"New rules",icon:"book"},{id:"depts",name:"Departments",icon:"building"},{id:"states",name:"States map",icon:"house"},
+ {id:"economy",name:"Economy",icon:"wallet"},{id:"people",name:"People",icon:"heart"},{id:"work",name:"Work",icon:"building"},
+ {id:"safety",name:"Safety",icon:"shield"},{id:"future",name:"Future",icon:"flask"},{id:"corruption",name:"Corruption",icon:"scale"},
+ {id:"ground",name:"Paper vs ground",icon:"search"},{id:"trust",name:"Politics",icon:"info"},{id:"foreign",name:"Foreign",icon:"ship"},
+ {id:"world",name:"World",icon:"ship"},{id:"promises",name:"Promises",icon:"book"},{id:"news",name:"News",icon:"search"},
+ {id:"decide",name:"Stay or go",icon:"road"},{id:"reck",name:"Reckoning",icon:"info"},{id:"audit",name:"Audit",icon:"search"}
 ];
-const head = (id, title, sub) => { const i = PAGES.findIndex(p => p.id === id) + 1;
-  return `<header class="wrap" style="padding-top:clamp(34px,6vw,64px)"><div class="eyebrow">Reel ${i} of ${PAGES.length}</div><h1 style="font-size:clamp(40px,7vw,78px);line-height:.92;letter-spacing:-.06em;margin:10px 0 12px">${title}</h1><p class="muted" style="max-width:62ch;font-size:17px">${sub}</p></header>${vo(id)}`; };
+const head = (id, title, sub) => `<header class="wrap" style="padding-top:clamp(34px,6vw,64px)"><div class="eyebrow">Fact sheet | ${PAGES.find(p => p.id === id).name}</div><h1 style="font-size:clamp(40px,7vw,78px);line-height:.92;letter-spacing:-.06em;margin:10px 0 12px">${title}</h1><p class="muted" style="max-width:62ch;font-size:17px">${sub}</p></header>${vo(id)}`;
 const pager = id => { const i = PAGES.findIndex(p => p.id === id); const a = PAGES[i-1], b = PAGES[i+1];
   return `<div class="wrap"><div class="pager">${a?`<a href="#/${a.id}"><small>Previous reel</small>${a.name}</a>`:"<span></span>"}${b?`<a href="#/${b.id}"><small>Next reel</small>${b.name}</a>`:""}</div></div>`; };
 const R = {};
 const usd = v => "$" + fmt(v);
 const pc = v => v + "%";
-
-/* ---------------- OVERVIEW ---------------- */
-const JUDGE = [
- ["Income","far","8-10x below top countries","improving","Growth 7.8%; poverty 27.1% to 5.3%","High",["gniw2","gdpq1","pov"]],
- ["Tax burden","mixed","17.6% of GDP vs 34.1% OECD average","mixed","GST gross +14.8%, net +8.3%; narrow filer base","Medium",["oecd","gst","itr"]],
- ["Health","far","Public spend 1.43% of GDP","improving","Infant deaths 32 to 25; out-of-pocket 64% to 43%","High",["nha","srs"]],
- ["Education","behind","Class 3 reading 23.4%","mixed","Reading recovered from 16.3% in 2022; still under 1 in 4","Medium",["aser"]],
- ["Jobs","behind","Youth unemployment 15.9%","worsening","Up from 14.6% a year earlier","Medium",["plfsq","plfsa"]],
- ["Safety","behind","Peace rank 127 of 163","worsening","Fell from 115th a year earlier","Medium",["gpi26","gpi25"]],
- ["R&D","far","0.84% of GDP vs 2.58-4.94%","mixed","Private firms fund 51.8%; RDI scheme early","Medium",["rd","rdi"]],
- ["Air and climate","far","PM2.5 48.9 (about 10x WHO)","unverified","Monsoon 15% short in 2026","Medium",["air","monsoon"]],
- ["Financial stability","mixed","Banks 1.8% bad loans; reserves $729B","stressed","Rupee -9%; oil shock; food inflation 5.95%","Medium",["npa","resv","fx"]],
- ["Political trust","mixed","Press 157 of 180; Freedom House 62/100","mixed","Power changed hands in states; roll deletions contested","Medium",["rsf2","fh2","elec","sir"]],
- ["Data quality","far","IMF grade C on national accounts","mixed","Census under way; GDP rebased","Low",["imfc","census"]]
-];
-const TLDR = [
- ["Direction is good, level is low.","Poverty, child deaths, bank health and digital payments have improved. Income per person is still 8-10x below the top countries."],
- ["Tax rates are not the outlier; the base is.","India's top rate (about 39%) is near or below the rich countries'. Its tax share of GDP is half the OECD average, and few people file."],
- ["2026 added stress.","Rupee down about 9%, an oil shock through Hormuz, a 15% monsoon gap, and youth unemployment at 15.9%."],
- ["Trust is the quiet risk.","The IMF grades the GDP data C; press and freedom indices are falling; voter-roll deletions and a 16-year census gap are disputed."],
- ["Promises: late is common, silent is rare.","Of 19 claims scored, few are cleanly delivered, several are missed, and many are late but still moving."],
- ["The decision depends on who you are.","The report gives the push factors, the pull factors, the friction, and signals to watch. It does not give orders."]
-];
-R.home = () => {
-  const radRows = RANKS.map(x => ({l:x.s, v:Math.round((x.n-x.r)/x.n*100), tip:`${x.l}: rank ${x.r} of ${x.n}. India beats ${((x.n-x.r)/x.n*100).toFixed(0)}% of ranked countries.`}));
-  return `
-<header class="hero"><div class="wrap hero-grid">
- <div><div class="eyebrow">Interactive statistical report | India | 20 September 2026</div>
- <h1>India 2026<br><em>the ledger</em></h1>
- <p class="hero-copy">Taxes, outcomes, promises, stability, and the stay-or-go question. Not political. Not emotional. Every number carries a year, a definition, and a link.</p>
- <div class="chips">${[["landmark","Tax and fiscal"],["heart","Health, school, poverty"],["building","Jobs and income"],["shield","Safety"],["flask","R&D and future"],["scale","Trust and stability"],["book","Promises audit"],["road","Migration"]].map(x=>`<span class="chip">${ic(x[0]).replace('class="icon"','class="icon sm"')}${x[1]}</span>`).join("")}</div></div>
- <div class="panel"><div class="eyebrow">Where India beats the world</div><h3>Share of ranked countries India beats, 9 rankings</h3>${radar(radRows,400)}<p class="fine">Outer ring = beats 100%. Inner ring = 25%. Hover a dot.</p></div>
-</div></header>
-${vo("home")}
-${S("kpi","chart","01 / headline numbers","India in eight numbers","Every tile shows a year and a source. Hover for detail.",tiles([
- {n:7.8,dec:1,suf:"%",l:"GDP growth, Apr-Jun 2026",d:"New series; deflator disputed",tone:"lime",k:["gdpq1","gdpdebate"]},
- {n:17.6,dec:1,suf:"%",l:"Taxes / GDP, all governments",d:"OECD average 34.1% (India value from draft)",tone:"blue",k:["oecd"]},
- {n:11050,pre:"$",l:"Income per person, PPP, 2024",d:"8-10x below Norway, Switzerland, US",tone:"orange",k:["gniw2","gniw"]},
- {n:95.89,dec:2,pre:"Rs ",l:"Rupee per dollar",d:"Down about 9% in 12 months",tone:"red",k:["fx2","fx"]},
- {n:4.82,dec:2,suf:"%",l:"Consumer inflation, Aug 2026",d:"Food 5.95%",tone:"orange",k:["cpi","foodinf"]},
- {n:15.9,dec:1,suf:"%",l:"Youth unemployment, Apr-Jun 2026",d:"14.6% a year earlier",tone:"red",k:["plfsq"]},
- {n:5.3,dec:1,suf:"%",l:"Extreme poverty ($3/day), 2022-23",d:"27.1% in 2011-12",tone:"cyan",k:["pov"]},
- {txt:"127th",l:"Global Peace Index 2026",d:"115th a year earlier",tone:"red",k:["gpi26"]}
-]))}
-${S("score","scale","02 / scorecard","Level vs direction, by domain","Level = where India stands against top countries. Direction = which way it moved recently. Confidence = how well the data can be checked. The chips are my reading of the sources.",`<div class="tbl"><table><thead><tr><th>Domain</th><th>Level</th><th>Evidence</th><th>Direction</th><th>Why</th><th>Confidence</th></tr></thead><tbody>${JUDGE.map(j=>`<tr><td><b>${j[0]}</b></td><td>${chipS(j[1])}</td><td>${j[2]}</td><td>${chipS(j[3])}</td><td>${j[4]} ${c(...j[6])}</td><td>${j[5]}</td></tr>`).join("")}</tbody></table></div>`)}
-${S("tldr","info","03 / tl;dr","Six findings","",`<div class="g3">${TLDR.map((t,i)=>`<div class="panel"><div class="eyebrow">Finding ${i+1}</div><h3>${t[0]}</h3><p class="muted" style="margin:0">${t[1]}</p></div>`).join("")}</div>`)}
-${S("trust","search","04 / how to trust this","Three rules for every number","",`<div class="g3">
- <div class="panel"><h3>Year and definition</h3><p class="muted" style="margin:0">Each figure names its year and what it covers. India's 11.2% (Centre only) is never compared with other countries' totals.</p></div>
- <div class="panel"><h3>Two numbers, both shown</h3><p class="muted" style="margin:0">Where official sources disagree (jobs 3.1% vs 5.4%, R&amp;D 0.6% vs 0.84%), both appear with the reason.</p></div>
- <div class="panel"><h3>n/v means not verified</h3><p class="muted" style="margin:0">A missing value shows n/v instead of a guess. <span class="tag">Calc</span> marks my arithmetic. <span class="tag">Draft</span> marks values from the first draft.</p></div></div>`)}
-${S("explore","road","05 / explore","Fourteen reels","",`<div class="g4">${PAGES.slice(1).map((p,i)=>`<a class="panel" href="#/${p.id}"><div class="ico">${ic(p.icon)}</div><div class="eyebrow" style="margin-top:12px">Reel ${i+2}</div><h3 style="margin:4px 0 0">${p.name}</h3></a>`).join("")}</div>`)}
-${pager("home")}`;
-};
 
 /* ---------------- TAX ---------------- */
 const TOLLS = [["wallet","Income tax","Union","Zero up to 12.75 lakh for salaried people under the new regime."],["cart","GST","Union + states","On most goods and services. Several slabs after the Sept 2025 reform."],["ship","Customs duty","Union","On imports."],["fuel","Fuel excise","Union","On petrol and diesel, on top of state VAT."],["fuel","State VAT","State","On fuel and liquor."],["house","Stamp duty","State","When you register a property."],["building","Property and professional tax","State / local","Charged by municipalities and states."],["chart","Capital gains and dividend tax","Union","On profits from shares, property and funds. Check current rates."],["scale","Cess and surcharge","Union","4% cess on income tax, plus a surcharge at high incomes."]];
